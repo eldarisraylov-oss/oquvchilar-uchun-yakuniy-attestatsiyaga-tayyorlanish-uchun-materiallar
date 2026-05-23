@@ -1,9 +1,706 @@
 <!DOCTYPE html>
-<html>
+<html lang="uz">
 <head>
-    <title>Matematika test javoblari</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>9-sinf Yakuniy Test | Imtihon Portali</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c10;
+    --surface: #111318;
+    --border: #1e2130;
+    --accent: #e8c547;
+    --accent2: #4fc3f7;
+    --danger: #ef5350;
+    --text: #e8eaf0;
+    --muted: #7a8099;
+    --success: #66bb6a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ── GRID LINES ── */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(232,197,71,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,197,71,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ══════════════════════════════════
+     SCREEN 1 — CONSENT
+  ══════════════════════════════════ */
+  #consent-screen, #pdf-screen {
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+
+  #pdf-screen { display: none; }
+
+  .consent-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    max-width: 640px;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,197,71,0.08);
+    animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .consent-header {
+    background: linear-gradient(135deg, #1a1c24 0%, #0f111a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 32px 36px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .consent-header::after {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(232,197,71,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(232,197,71,0.12);
+    border: 1px solid rgba(232,197,71,0.3);
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  .consent-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 900;
+    line-height: 1.1;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  .consent-header h1 span { color: var(--accent); }
+
+  .consent-header p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* Timer banner */
+  .timer-banner {
+    background: linear-gradient(135deg, rgba(239,83,80,0.12), rgba(239,83,80,0.06));
+    border: 1px solid rgba(239,83,80,0.25);
+    margin: 0 36px;
+    margin-top: 24px;
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .timer-icon {
+    font-size: 22px; flex-shrink: 0;
+  }
+
+  .timer-banner-text { flex: 1; }
+  .timer-banner-text strong {
+    display: block;
+    color: var(--danger);
+    font-size: 12px; letter-spacing: 1px;
+    font-family: 'IBM Plex Mono', monospace;
+    margin-bottom: 4px;
+  }
+  .timer-banner-text p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  #countdown-display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 600;
+    color: var(--accent);
+    background: rgba(232,197,71,0.08);
+    border: 1px solid rgba(232,197,71,0.2);
+    padding: 6px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Scroll box */
+  .consent-body {
+    padding: 24px 36px;
+  }
+
+  .scroll-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 2px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .consent-text {
+    background: #0d0f17;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    height: 200px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #c0c4d6;
+    scroll-behavior: smooth;
+  }
+
+  .consent-text::-webkit-scrollbar { width: 4px; }
+  .consent-text::-webkit-scrollbar-track { background: transparent; }
+  .consent-text::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .consent-text h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent);
+    font-size: 15px; margin-bottom: 12px;
+  }
+
+  .consent-text p { margin-bottom: 10px; }
+
+  .consent-text .rule {
+    display: flex; gap: 10px; align-items: flex-start;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 6px;
+    border-left: 2px solid rgba(232,197,71,0.3);
+  }
+
+  .rule-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; color: var(--accent);
+    font-weight: 600; flex-shrink: 0; margin-top: 1px;
+  }
+
+  .special-note {
+    background: linear-gradient(135deg, rgba(79,195,247,0.08), rgba(79,195,247,0.04));
+    border: 1px solid rgba(79,195,247,0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--accent2);
+    line-height: 1.7;
+  }
+
+  .special-note strong { display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; opacity: 0.7; }
+
+  /* Checkbox + buttons */
+  .consent-actions {
+    padding: 0 36px 28px;
+  }
+
+  .checkbox-row {
+    display: flex; align-items: flex-start; gap: 12px;
+    margin-bottom: 20px;
+    padding: 14px;
+    background: rgba(255,255,255,0.02);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .checkbox-row:hover { border-color: rgba(232,197,71,0.3); }
+
+  .checkbox-row input[type="checkbox"] {
+    width: 18px; height: 18px;
+    accent-color: var(--accent);
+    cursor: pointer; flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .checkbox-row label {
+    font-size: 13px; color: var(--text);
+    line-height: 1.6; cursor: pointer;
+  }
+
+  .btn-row { display: flex; gap: 10px; }
+
+  .btn {
+    flex: 1; padding: 14px 20px;
+    border: none; border-radius: 10px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+  }
+
+  .btn-decline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  .btn-decline:hover {
+    background: rgba(239,83,80,0.08);
+    border-color: rgba(239,83,80,0.3);
+    color: var(--danger);
+  }
+
+  .btn-accept {
+    background: var(--accent);
+    color: #0a0c10;
+  }
+
+  .btn-accept:disabled {
+    opacity: 0.35; cursor: not-allowed;
+    filter: grayscale(0.5);
+  }
+
+  .btn-accept:not(:disabled):hover {
+    background: #f0d060;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(232,197,71,0.3);
+  }
+
+  /* ══════════════════════════════════
+     SCREEN 2 — PDF VIEWER
+  ══════════════════════════════════ */
+  #pdf-screen {
+    flex-direction: column;
+    background: var(--bg);
+  }
+
+  .pdf-header {
+    width: 100%;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+
+  .pdf-header-left { display: flex; align-items: center; gap: 14px; }
+
+  .pdf-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 900;
+    color: var(--accent);
+  }
+
+  .pdf-title {
+    font-size: 13px; color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
+  .pdf-header-right { display: flex; align-items: center; gap: 12px; }
+
+  .live-timer {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(239,83,80,0.1);
+    border: 1px solid rgba(239,83,80,0.25);
+    border-radius: 8px;
+    padding: 6px 14px;
+  }
+
+  .live-dot {
+    width: 7px; height: 7px;
+    background: var(--danger);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.8); }
+  }
+
+  #live-countdown {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; font-weight: 600;
+    color: var(--danger);
+  }
+
+  .security-badge {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(102,187,106,0.1);
+    border: 1px solid rgba(102,187,106,0.25);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; color: var(--success);
+    letter-spacing: 1px;
+  }
+
+  /* BLOCKED STATE */
+  #blocked-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(10,12,16,0.97);
+    z-index: 200;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding: 40px;
+  }
+
+  .blocked-icon { font-size: 64px; }
+
+  .blocked-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 900;
+    color: var(--danger);
+  }
+
+  .blocked-sub {
+    color: var(--muted); font-size: 15px;
+    max-width: 400px; line-height: 1.7;
+  }
+
+  .blocked-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 20px; font-weight: 600;
+    color: var(--accent);
+    background: rgba(232,197,71,0.08);
+    border: 1px solid rgba(232,197,71,0.2);
+    padding: 12px 24px;
+    border-radius: 10px;
+  }
+
+  /* PDF embed wrapper */
+  .pdf-wrapper {
+    flex: 1;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #pdf-embed {
+    width: 100%; height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* WATERMARK */
+  .watermark {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-35deg);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 900;
+    color: rgba(232,197,71,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
+    letter-spacing: 8px;
+    user-select: none;
+  }
+
+  /* ── MODAL: DECLINED ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    z-index: 300;
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-box {
+    background: var(--surface);
+    border: 1px solid rgba(239,83,80,0.3);
+    border-radius: 16px;
+    padding: 36px;
+    max-width: 420px; width: 100%;
+    text-align: center;
+    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .modal-icon { font-size: 48px; margin-bottom: 16px; }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--danger);
+    margin-bottom: 12px;
+  }
+
+  .modal-text {
+    color: var(--muted); font-size: 14px;
+    line-height: 1.8; margin-bottom: 24px;
+  }
+
+  .modal-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .modal-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── SCREENSHOT WARNING ── */
+  #screenshot-warning {
+    display: none;
+    position: fixed; inset: 0;
+    background: #000;
+    z-index: 999;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+
+  #screenshot-warning .w-icon { font-size: 60px; }
+  #screenshot-warning h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; color: var(--danger);
+  }
+  #screenshot-warning p { color: var(--muted); font-size: 14px; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 520px) {
+    .consent-header, .consent-body, .consent-actions { padding-left: 20px; padding-right: 20px; }
+    .timer-banner { margin-left: 20px; margin-right: 20px; }
+    .btn-row { flex-direction: column; }
+    .pdf-header { flex-wrap: wrap; gap: 10px; }
+  }
+</style>
 </head>
-<body style="margin:0">
-    <embed src="javoblar.pdf" type="application/pdf" width="100%" height="1000px">
-</body>
-</html>
+<body>
+
+<!-- ════════════════════════════
+     SCREEN 1: ROZILIK XATI
+════════════════════════════ -->
+<div id="consent-screen">
+  <div class="consent-box">
+
+    <div class="consent-header">
+      <div class="badge">🎓 9-SINF &nbsp;|&nbsp; YAKUNIY IMTIHON</div>
+      <h1>O'quvchi <span>Rozilik Xati</span></h1>
+      <p>Quyidagi materiallardan foydalanishdan oldin shartlarni diqqat bilan o'qing va rozilik bildiring.</p>
+    </div>
+
+    <!-- Countdown banner -->
+    <div class="timer-banner">
+      <div class="timer-icon">⏳</div>
+      <div class="timer-banner-text">
+        <strong>⚠ MUHIM OGOHLANTIRISH</strong>
+        <p>Imtihon kuni — <b>04.06.2026</b>. O'sha sanadan boshlab PDF fayl bloklanadi. Foydalanishga vaqtingiz:</p>
+      </div>
+      <div id="countdown-display">—</div>
+    </div>
+
+    <div class="consent-body">
+      <div class="scroll-label">📋 Rozilik shartlari — to'liq o'qing</div>
+      <div class="consent-text" id="consent-scroll">
+        <h3>Foydalanish Shartlari va Kelishuvi</h3>
+
+        <p>Hurmatli o'quvchi! Ushbu materiallardan foydalanish uchun quyidagi qoidalarga qat'iy rioya qilishingiz shart.</p>
+
+        <div class="rule">
+          <span class="rule-num">01</span>
+          <span>Ushbu PDF fayl faqat <strong>shaxsiy tayyorlanish</strong> maqsadida taqdim etilgan. Uni ijtimoiy tarmoqlarda, guruhlarda yoki boshqa platformalarda tarqatish <strong>mutlaqo taqiqlanadi</strong>.</span>
+        </div>
+
+        <div class="rule">
+          <span class="rule-num">02</span>
+          <span><strong>Skrinshot olish, ekran yozuvini boshlash</strong> va faylni yuklab olish qat'iyan taqiqlanadi. Sayt texnik himoya vositalariga ega.</span>
+        </div>
+
+        <div class="rule">
+          <span class="rule-num">03</span>
+          <span>Materiallar <strong>04.06.2026 — imtihon kuni</strong> avtomatik ravishda bloklanadi. O'sha sanadan keyin kirish imkoni bo'lmaydi.</span>
+        </div>
+
+        <div class="rule">
+          <span class="rule-num">04</span>
+          <span>Ushbu materialni boshqa o'quvchilarga tarqatish yoki ommaga oshkor qilish <strong>ta'lim muassasasi qoidalarini buzish</strong> hisoblanadi.</span>
+        </div>
+
+        <div class="rule">
+          <span class="rule-num">05</span>
+          <span>Imtihon paytida bu materialdan foydalanish qat'iyan <strong>taqiqlanadi</strong>. Faqat oldindan mustaqil tayyorlanish uchun mo'ljallangan.</span>
+        </div>
+
+        <div class="rule">
+          <span class="rule-num">06</span>
+          <span>Ushbu rozilik xatiga imzo chekib, siz yuqoridagi barcha qoidalarga <strong>to'liq amal qilishga</strong> va'da berasiz.</span>
+        </div>
+
+        <div class="special-note">
+          <strong>🫡 O'QITUVCHIDAN MAXSUS XABAR</strong>
+          Egzamen kuni testting jauaptarin qaidan aldingdar dese — <em>«ozimiz taptiq dengder, Eldar agai berdi demengder»</em> ok 🫡
+        </div>
+      </div>
+    </div>
+
+    <div class="consent-actions">
+      <label class="checkbox-row" for="agree-check">
+        <input type="checkbox" id="agree-check" onchange="toggleAccept()">
+        <label for="agree-check">Men yuqoridagi barcha shartlarni to'liq o'qidim va ularga <strong>to'liq roziman</strong>. Qoidalarni buzmaslikka va'da beraman.</label>
+      </label>
+
+      <div class="btn-row">
+        <button class="btn btn-decline" onclick="declineConsent()">Rad etaman</button>
+        <button class="btn btn-accept" id="accept-btn" disabled onclick="acceptConsent()">✓ Roziman, Kirish</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     SCREEN 2: PDF VIEWER
+════════════════════════════ -->
+<div id="pdf-screen">
+  <div class="pdf-header">
+    <div class="pdf-header-left">
+      <div class="pdf-logo">ExamPortal</div>
+      <div class="pdf-title">9-sinf / Yakuniy Test Javoblari</div>
+    </div>
+    <div class="pdf-header-right">
+      <div class="live-timer">
+        <div class="live-dot"></div>
+        <span id="live-countdown">—</span>
+      </div>
+      <div class="security-badge">🔒 HIMOYALANGAN</div>
+    </div>
+  </div>
+
+  <div class="watermark">SHAXSIY FOYDALANISH</div>
+
+  <div class="pdf-wrapper">
+    <iframe
+      id="pdf-embed"
+      src=""
+      type="application/pdf"
+      title="9-sinf Yakuniy Test Javoblari"
+    ></iframe>
+  </div>
+</div>
+
+<!-- Blocked overlay (exam day) -->
+<div id="blocked-overlay">
+  <div class="blocked-icon">🔒</div>
+  <div class="blocked-title">Kirish Bloklandi</div>
+  <div class="blocked-sub">
+    Imtihon kuni keldi. Bu material imtihon vaqtida ko'rishga ruxsat berilmaydi.<br><br>
+    Omad tilaymiz! Bilimlaringizga ishoning. 💪
+  </div>
+  <div class="blocked-date">04.06.2026 — Imtihon Kuni</div>
+  <div class="blocked-sub" style="margin-top:8px; font-style:italic; color: #e8c547;">
+    Egzamen kuni testting jauaptarin qaidan aldingdar dese —<br>
+    <strong>«ozimiz taptiq dengder, Eldar agai berdi demengder»</strong> ok 🫡
+  </div>
+</div>
+
+<!-- Decline modal -->
+<div class="modal-overlay" id="decline-modal">
+  <div class="modal-box">
+    <div class="modal-icon">🚫</div>
+    <div class="modal-title">Kirishga Ruxsat Yo'q</div>
+    <div class="modal-text">
+      Siz rozilik bermagansiz. Afsuski, shartlarga rozi bo'lmagan holda PDF fayldagi ma'lumotlardan foydalanishga <strong>ruxsat bera olmaymiz</strong>.<br><br>
+      Qayta urinib ko'rish uchun "Orqaga" tugmasini bosing.
+    </div>
+    <button class="modal-btn" onclick="closeDecline()">← Orqaga Qaytish</button>
+  </div>
+</div>
+
+<!-- Screenshot warning -->
+<div id="screenshot-warning">
+  <div class="w-icon">📵</div>
+  <h2>Skrinshot Aniqlandi!</h2>
+  <p>Ekran yozuvi yoki skrinshot olish taqiqlanadi.</p>
+</div>
+
+<script>
+  // ═══════════════════════════════════
+  // CONFIG
+  // ═══════════════════════════════════
+  const EXAM_DATE = new Date('2026-06-04T00:00:00');
+  const PDF_URL   = 'javoblar.pdf'; // GitHub repo ichida shu nom bilan bo'lishi kerak
+
+  // ═══════════════════════════════════
+  // COUNTDOWN
+  // ═══════════════════════════════════
+  function formatCountdown(ms) {
+    if (ms <= 0) return 'BLOKLANGAN';
+    const d = Math.floor(ms / 86400000);
+    const h = Math.floor((ms % 86400000) / 3600000);
+    const m = Math.floor((ms % 3600000) / 60000);
+    const s = Math.floor((ms % 60000) / 1000);
+    return `${d}k ${h}s ${m}d ${s}`;
+  }
+
+  function updateCountdowns() {
+    const now  = new Date();
+    const diff = EXAM_DATE - now;
+    const txt  = formatCountdown(diff);
+    const el1  = document.getElementById('countdown-display');
+    const el2  = document.getElementById('live-countdown');
+    if (el1) el1.textContent = txt;
+    if (el2) el2.textContent = txt;
+  }
+
+  updateCountdowns();
+  setInterval(updateCountdowns, 1000);
+
+  // ═══════════════════════════════════
+  // CONSENT LOGIC
+  // ═══════════════════════════════════
+  function toggleAccept() {
+    const cb  = document
