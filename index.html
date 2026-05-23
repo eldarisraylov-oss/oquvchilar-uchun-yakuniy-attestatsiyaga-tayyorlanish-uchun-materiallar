@@ -3,704 +3,727 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>9-sinf Yakuniy Test | Imtihon Portali</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<title>9-sinf Yakuniy Test Javoblari</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0c10;
-    --surface: #111318;
-    --border: #1e2130;
-    --accent: #e8c547;
-    --accent2: #4fc3f7;
-    --danger: #ef5350;
-    --text: #e8eaf0;
-    --muted: #7a8099;
-    --success: #66bb6a;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Noto Sans', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none; z-index: 9999;
-    opacity: 0.4;
-  }
-
-  /* ── GRID LINES ── */
-  body::after {
-    content: '';
-    position: fixed; inset: 0;
-    background-image:
-      linear-gradient(rgba(232,197,71,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232,197,71,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none; z-index: 0;
-  }
-
-  /* ══════════════════════════════════
-     SCREEN 1 — CONSENT
-  ══════════════════════════════════ */
-  #consent-screen, #pdf-screen {
-    position: fixed; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 100;
-    padding: 20px;
-  }
-
-  #pdf-screen { display: none; }
-
-  .consent-box {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    max-width: 640px;
-    width: 100%;
-    padding: 0;
-    overflow: hidden;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(232,197,71,0.08);
-    animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1) forwards;
-  }
-
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .consent-header {
-    background: linear-gradient(135deg, #1a1c24 0%, #0f111a 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 32px 36px 28px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .consent-header::after {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 160px; height: 160px;
-    background: radial-gradient(circle, rgba(232,197,71,0.12) 0%, transparent 70%);
-    border-radius: 50%;
-  }
-
-  .badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(232,197,71,0.12);
-    border: 1px solid rgba(232,197,71,0.3);
-    color: var(--accent);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; font-weight: 600;
-    letter-spacing: 2px;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin-bottom: 16px;
-  }
-
-  .consent-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(22px, 4vw, 32px);
-    font-weight: 900;
-    line-height: 1.1;
-    color: #fff;
-    margin-bottom: 10px;
-  }
-
-  .consent-header h1 span { color: var(--accent); }
-
-  .consent-header p {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.6;
-  }
-
-  /* Timer banner */
-  .timer-banner {
-    background: linear-gradient(135deg, rgba(239,83,80,0.12), rgba(239,83,80,0.06));
-    border: 1px solid rgba(239,83,80,0.25);
-    margin: 0 36px;
-    margin-top: 24px;
-    border-radius: 10px;
-    padding: 14px 18px;
-    display: flex; align-items: center; gap: 12px;
-  }
-
-  .timer-icon {
-    font-size: 22px; flex-shrink: 0;
-  }
-
-  .timer-banner-text { flex: 1; }
-  .timer-banner-text strong {
-    display: block;
-    color: var(--danger);
-    font-size: 12px; letter-spacing: 1px;
-    font-family: 'IBM Plex Mono', monospace;
-    margin-bottom: 4px;
-  }
-  .timer-banner-text p {
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.5;
-  }
-
-  #countdown-display {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px; font-weight: 600;
-    color: var(--accent);
-    background: rgba(232,197,71,0.08);
-    border: 1px solid rgba(232,197,71,0.2);
-    padding: 6px 12px;
-    border-radius: 6px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  /* Scroll box */
-  .consent-body {
-    padding: 24px 36px;
-  }
-
-  .scroll-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; letter-spacing: 2px;
-    color: var(--muted);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-  }
-
-  .consent-text {
-    background: #0d0f17;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
-    height: 200px;
-    overflow-y: auto;
-    font-size: 13px;
-    line-height: 1.9;
-    color: #c0c4d6;
-    scroll-behavior: smooth;
-  }
-
-  .consent-text::-webkit-scrollbar { width: 4px; }
-  .consent-text::-webkit-scrollbar-track { background: transparent; }
-  .consent-text::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-  .consent-text h3 {
-    font-family: 'Playfair Display', serif;
-    color: var(--accent);
-    font-size: 15px; margin-bottom: 12px;
-  }
-
-  .consent-text p { margin-bottom: 10px; }
-
-  .consent-text .rule {
-    display: flex; gap: 10px; align-items: flex-start;
-    margin-bottom: 8px;
-    padding: 8px 10px;
-    background: rgba(255,255,255,0.02);
-    border-radius: 6px;
-    border-left: 2px solid rgba(232,197,71,0.3);
-  }
-
-  .rule-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px; color: var(--accent);
-    font-weight: 600; flex-shrink: 0; margin-top: 1px;
-  }
-
-  .special-note {
-    background: linear-gradient(135deg, rgba(79,195,247,0.08), rgba(79,195,247,0.04));
-    border: 1px solid rgba(79,195,247,0.2);
-    border-radius: 8px;
-    padding: 12px 14px;
-    margin-top: 14px;
-    font-size: 13px;
-    color: var(--accent2);
-    line-height: 1.7;
-  }
-
-  .special-note strong { display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 1px; opacity: 0.7; }
-
-  /* Checkbox + buttons */
-  .consent-actions {
-    padding: 0 36px 28px;
-  }
-
-  .checkbox-row {
-    display: flex; align-items: flex-start; gap: 12px;
-    margin-bottom: 20px;
-    padding: 14px;
-    background: rgba(255,255,255,0.02);
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-
-  .checkbox-row:hover { border-color: rgba(232,197,71,0.3); }
-
-  .checkbox-row input[type="checkbox"] {
-    width: 18px; height: 18px;
-    accent-color: var(--accent);
-    cursor: pointer; flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  .checkbox-row label {
-    font-size: 13px; color: var(--text);
-    line-height: 1.6; cursor: pointer;
-  }
-
-  .btn-row { display: flex; gap: 10px; }
-
-  .btn {
-    flex: 1; padding: 14px 20px;
-    border: none; border-radius: 10px;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 14px; font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.3px;
-  }
-
-  .btn-decline {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-  }
-
-  .btn-decline:hover {
-    background: rgba(239,83,80,0.08);
-    border-color: rgba(239,83,80,0.3);
-    color: var(--danger);
-  }
-
-  .btn-accept {
-    background: var(--accent);
-    color: #0a0c10;
-  }
-
-  .btn-accept:disabled {
-    opacity: 0.35; cursor: not-allowed;
-    filter: grayscale(0.5);
-  }
-
-  .btn-accept:not(:disabled):hover {
-    background: #f0d060;
-    transform: translateY(-1px);
-    box-shadow: 0 8px 24px rgba(232,197,71,0.3);
-  }
-
-  /* ══════════════════════════════════
-     SCREEN 2 — PDF VIEWER
-  ══════════════════════════════════ */
-  #pdf-screen {
-    flex-direction: column;
-    background: var(--bg);
-  }
-
-  .pdf-header {
-    width: 100%;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    z-index: 10;
-    flex-shrink: 0;
-  }
-
-  .pdf-header-left { display: flex; align-items: center; gap: 14px; }
-
-  .pdf-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 18px; font-weight: 900;
-    color: var(--accent);
-  }
-
-  .pdf-title {
-    font-size: 13px; color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-  }
-
-  .pdf-header-right { display: flex; align-items: center; gap: 12px; }
-
-  .live-timer {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(239,83,80,0.1);
-    border: 1px solid rgba(239,83,80,0.25);
-    border-radius: 8px;
-    padding: 6px 14px;
-  }
-
-  .live-dot {
-    width: 7px; height: 7px;
-    background: var(--danger);
-    border-radius: 50%;
-    animation: pulse 1.5s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50%       { opacity: 0.4; transform: scale(0.8); }
-  }
-
-  #live-countdown {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px; font-weight: 600;
-    color: var(--danger);
-  }
-
-  .security-badge {
-    display: flex; align-items: center; gap: 6px;
-    background: rgba(102,187,106,0.1);
-    border: 1px solid rgba(102,187,106,0.25);
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px; color: var(--success);
-    letter-spacing: 1px;
-  }
-
-  /* BLOCKED STATE */
-  #blocked-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(10,12,16,0.97);
-    z-index: 200;
-    align-items: center; justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-    text-align: center;
-    padding: 40px;
-  }
-
-  .blocked-icon { font-size: 64px; }
-
-  .blocked-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px; font-weight: 900;
-    color: var(--danger);
-  }
-
-  .blocked-sub {
-    color: var(--muted); font-size: 15px;
-    max-width: 400px; line-height: 1.7;
-  }
-
-  .blocked-date {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 20px; font-weight: 600;
-    color: var(--accent);
-    background: rgba(232,197,71,0.08);
-    border: 1px solid rgba(232,197,71,0.2);
-    padding: 12px 24px;
-    border-radius: 10px;
-  }
-
-  /* PDF embed wrapper */
-  .pdf-wrapper {
-    flex: 1;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #pdf-embed {
-    width: 100%; height: 100%;
-    border: none;
-    display: block;
-  }
-
-  /* WATERMARK */
-  .watermark {
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%) rotate(-35deg);
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(40px, 8vw, 80px);
-    font-weight: 900;
-    color: rgba(232,197,71,0.04);
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 5;
-    letter-spacing: 8px;
-    user-select: none;
-  }
-
-  /* ── MODAL: DECLINED ── */
-  .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(8px);
-    z-index: 300;
-    align-items: center; justify-content: center;
-    padding: 20px;
-  }
-
-  .modal-box {
-    background: var(--surface);
-    border: 1px solid rgba(239,83,80,0.3);
-    border-radius: 16px;
-    padding: 36px;
-    max-width: 420px; width: 100%;
-    text-align: center;
-    animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
-  }
-
-  .modal-icon { font-size: 48px; margin-bottom: 16px; }
-
-  .modal-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px; font-weight: 900;
-    color: var(--danger);
-    margin-bottom: 12px;
-  }
-
-  .modal-text {
-    color: var(--muted); font-size: 14px;
-    line-height: 1.8; margin-bottom: 24px;
-  }
-
-  .modal-btn {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 12px 28px;
-    border-radius: 8px;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .modal-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  /* ── SCREENSHOT WARNING ── */
-  #screenshot-warning {
-    display: none;
-    position: fixed; inset: 0;
-    background: #000;
-    z-index: 999;
-    align-items: center; justify-content: center;
-    flex-direction: column;
-    gap: 16px;
-    text-align: center;
-  }
-
-  #screenshot-warning .w-icon { font-size: 60px; }
-  #screenshot-warning h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px; color: var(--danger);
-  }
-  #screenshot-warning p { color: var(--muted); font-size: 14px; }
-
-  /* ── RESPONSIVE ── */
-  @media(max-width: 520px) {
-    .consent-header, .consent-body, .consent-actions { padding-left: 20px; padding-right: 20px; }
-    .timer-banner { margin-left: 20px; margin-right: 20px; }
-    .btn-row { flex-direction: column; }
-    .pdf-header { flex-wrap: wrap; gap: 10px; }
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #f0f4f8;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── CONSENT CARD ── */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  max-width: 580px;
+  width: 100%;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  overflow: hidden;
+}
+
+/* Header */
+.card-header {
+  background: #1e3a5f;
+  padding: 28px 28px 24px;
+  color: #fff;
+}
+
+.header-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #7eb3e0;
+  margin-bottom: 8px;
+}
+
+.card-header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.card-header p {
+  font-size: 13px;
+  color: #a8c4e0;
+  line-height: 1.6;
+}
+
+/* Timer strip */
+.timer-strip {
+  background: #fff7ed;
+  border-bottom: 1px solid #fed7aa;
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.timer-strip span {
+  font-size: 13px;
+  color: #92400e;
+}
+
+.timer-strip strong {
+  color: #c2410c;
+}
+
+#cd {
+  font-size: 13px;
+  font-weight: 700;
+  color: #c2410c;
+  background: #fee2e2;
+  border-radius: 6px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+/* Body */
+.card-body {
+  padding: 24px 28px 0;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+/* Scrollable rules */
+.rules-box {
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  height: 220px;
+  overflow-y: auto;
+  padding: 16px;
+  background: #f8fafc;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: #334155;
+}
+
+.rules-box::-webkit-scrollbar { width: 5px; }
+.rules-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+.rule-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+}
+
+.rule-item:last-child { margin-bottom: 0; }
+
+.rn {
+  font-weight: 700;
+  color: #1e3a5f;
+  font-size: 13px;
+  flex-shrink: 0;
+  width: 22px;
+}
+
+.rule-item p { color: #475569; font-size: 13px; line-height: 1.7; }
+
+.note-box {
+  margin-top: 10px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  color: #1e40af;
+  line-height: 1.7;
+}
+
+.note-box strong {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: #3b82f6;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+/* Disclaimer */
+.disclaimer {
+  margin-top: 14px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  color: #92400e;
+  line-height: 1.7;
+}
+
+.disclaimer strong {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  color: #c2410c;
+}
+
+/* Checkboxes */
+.card-footer {
+  padding: 20px 28px 28px;
+}
+
+.check-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.check-item:hover { border-color: #93c5fd; background: #f0f9ff; }
+.check-item.checked { border-color: #3b82f6; background: #eff6ff; }
+
+.check-item input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #2563eb;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.check-item label {
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.6;
+  cursor: pointer;
+}
+
+/* Buttons */
+.btn-row {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  flex: 1;
+  padding: 13px;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+
+.btn-decline {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+}
+
+.btn-decline:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+}
+
+.btn-accept {
+  background: #2563eb;
+  color: #fff;
+}
+
+.btn-accept:disabled {
+  background: #bfdbfe;
+  color: #93c5fd;
+  cursor: not-allowed;
+}
+
+.btn-accept:not(:disabled):hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37,99,235,0.35);
+}
+
+/* ── PDF SCREEN ── */
+#pdf-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  flex-direction: column;
+  background: #fff;
+}
+
+.pdf-bar {
+  background: #1e3a5f;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pdf-bar-title { font-size: 14px; font-weight: 600; }
+.pdf-bar-sub   { font-size: 11px; color: #7eb3e0; margin-top: 1px; }
+
+.pdf-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bar-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.badge-lock {
+  background: rgba(255,255,255,0.12);
+  color: #a8c4e0;
+}
+
+.badge-timer {
+  background: #fee2e2;
+  color: #c2410c;
+}
+
+#live-cd { font-weight: 700; }
+
+#pdf-frame {
+  flex: 1;
+  width: 100%;
+  border: none;
+  display: block;
+}
+
+/* ── BLOCKED ── */
+#blocked {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 40px;
+  gap: 16px;
+}
+
+.blocked-emoji { font-size: 56px; }
+
+.blocked h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #b91c1c;
+}
+
+.blocked p { font-size: 15px; color: #64748b; max-width: 380px; line-height: 1.7; }
+
+.blocked-date {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e3a5f;
+  background: #eff6ff;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 12px 24px;
+}
+
+.blocked-note {
+  font-size: 14px;
+  color: #c2410c;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 14px 20px;
+  max-width: 400px;
+  line-height: 1.7;
+}
+
+/* ── DECLINE MODAL ── */
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 400;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background: #fff;
+  border-radius: 14px;
+  padding: 32px 28px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+}
+
+.modal-emoji { font-size: 44px; margin-bottom: 12px; }
+
+.modal h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #b91c1c;
+  margin-bottom: 10px;
+}
+
+.modal p {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.modal-back {
+  background: #f1f5f9;
+  border: 1.5px solid #e2e8f0;
+  color: #334155;
+  padding: 11px 24px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.modal-back:hover { background: #e2e8f0; }
+
+/* ── WARN FLASH ── */
+#warn-flash {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  padding: 40px;
+}
+
+#warn-flash .we { font-size: 56px; }
+#warn-flash h2 { font-size: 22px; color: #ef4444; font-weight: 700; }
+#warn-flash p  { font-size: 14px; color: #94a3b8; }
+
+@media(max-width: 480px) {
+  .card-header, .card-body, .card-footer { padding-left: 18px; padding-right: 18px; }
+  .timer-strip { padding: 10px 18px; }
+  .btn-row { flex-direction: column; }
+  .pdf-bar { gap: 8px; }
+  .pdf-bar-right { flex-wrap: wrap; }
+}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════
-     SCREEN 1: ROZILIK XATI
-════════════════════════════ -->
+<!-- ══════════════════════════════
+     ROZILIK EKRANI
+══════════════════════════════ -->
 <div id="consent-screen">
-  <div class="consent-box">
+  <div class="card">
 
-    <div class="consent-header">
-      <div class="badge">🎓 9-SINF &nbsp;|&nbsp; YAKUNIY IMTIHON</div>
-      <h1>O'quvchi <span>Rozilik Xati</span></h1>
-      <p>Quyidagi materiallardan foydalanishdan oldin shartlarni diqqat bilan o'qing va rozilik bildiring.</p>
+    <div class="card-header">
+      <div class="header-label">📚 9-sinf &nbsp;·&nbsp; Yakuniy Imtihon</div>
+      <h1>O'quvchi Rozilik Xati</h1>
+      <p>Materiallardan foydalanishdan oldin quyidagi shartlarni diqqat bilan o'qing.</p>
     </div>
 
-    <!-- Countdown banner -->
-    <div class="timer-banner">
-      <div class="timer-icon">⏳</div>
-      <div class="timer-banner-text">
-        <strong>⚠ MUHIM OGOHLANTIRISH</strong>
-        <p>Imtihon kuni — <b>04.06.2026</b>. O'sha sanadan boshlab PDF fayl bloklanadi. Foydalanishga vaqtingiz:</p>
-      </div>
-      <div id="countdown-display">—</div>
+    <div class="timer-strip">
+      <span>⏳ Imtihon kuni: <strong>04.06.2026</strong> — foydalanish muddati:</span>
+      <div id="cd">hisoblanmoqda...</div>
     </div>
 
-    <div class="consent-body">
-      <div class="scroll-label">📋 Rozilik shartlari — to'liq o'qing</div>
-      <div class="consent-text" id="consent-scroll">
-        <h3>Foydalanish Shartlari va Kelishuvi</h3>
+    <div class="card-body">
+      <div class="section-label">Foydalanish shartlari</div>
+      <div class="rules-box">
 
-        <p>Hurmatli o'quvchi! Ushbu materiallardan foydalanish uchun quyidagi qoidalarga qat'iy rioya qilishingiz shart.</p>
-
-        <div class="rule">
-          <span class="rule-num">01</span>
-          <span>Ushbu PDF fayl faqat <strong>shaxsiy tayyorlanish</strong> maqsadida taqdim etilgan. Uni ijtimoiy tarmoqlarda, guruhlarda yoki boshqa platformalarda tarqatish <strong>mutlaqo taqiqlanadi</strong>.</span>
+        <div class="rule-item">
+          <div class="rn">1.</div>
+          <p>Bu materiallar faqat <strong>imtihonga shaxsiy tayyorlanish</strong> uchun berilgan. Boshqa maqsadda foydalanish taqiqlanadi.</p>
         </div>
 
-        <div class="rule">
-          <span class="rule-num">02</span>
-          <span><strong>Skrinshot olish, ekran yozuvini boshlash</strong> va faylni yuklab olish qat'iyan taqiqlanadi. Sayt texnik himoya vositalariga ega.</span>
+        <div class="rule-item">
+          <div class="rn">2.</div>
+          <p>Materiallarni ijtimoiy tarmoqlarda, guruhlarda yoki boshqa platformalarda <strong>tarqatish qat'iyan taqiqlanadi</strong>.</p>
         </div>
 
-        <div class="rule">
-          <span class="rule-num">03</span>
-          <span>Materiallar <strong>04.06.2026 — imtihon kuni</strong> avtomatik ravishda bloklanadi. O'sha sanadan keyin kirish imkoni bo'lmaydi.</span>
+        <div class="rule-item">
+          <div class="rn">3.</div>
+          <p><strong>Skrinshot olish va ekran yozuvini boshlash</strong> taqiqlanadi. Sayt texnik himoyaga ega.</p>
         </div>
 
-        <div class="rule">
-          <span class="rule-num">04</span>
-          <span>Ushbu materialni boshqa o'quvchilarga tarqatish yoki ommaga oshkor qilish <strong>ta'lim muassasasi qoidalarini buzish</strong> hisoblanadi.</span>
+        <div class="rule-item">
+          <div class="rn">4.</div>
+          <p>Materiallar <strong>04.06.2026 — imtihon kuni</strong> avtomatik bloklanadi. Imtihon paytida foydalanish taqiqlanadi.</p>
         </div>
 
-        <div class="rule">
-          <span class="rule-num">05</span>
-          <span>Imtihon paytida bu materialdan foydalanish qat'iyan <strong>taqiqlanadi</strong>. Faqat oldindan mustaqil tayyorlanish uchun mo'ljallangan.</span>
+        <div class="rule-item">
+          <div class="rn">5.</div>
+          <p>Bu materialdan olingan ma'lumotdan foydalangan holda yuzaga keladigan har qanday oqibat uchun <strong>faqat o'quvchining o'zi javobgar</strong> bo'ladi. O'qituvchi yoki ta'lim muassasasi hech qanday mas'uliyat ko'tarmaydi.</p>
         </div>
 
-        <div class="rule">
-          <span class="rule-num">06</span>
-          <span>Ushbu rozilik xatiga imzo chekib, siz yuqoridagi barcha qoidalarga <strong>to'liq amal qilishga</strong> va'da berasiz.</span>
+        <div class="rule-item">
+          <div class="rn">6.</div>
+          <p>Ushbu shartlarga rozi bo'lib, siz barcha qoidalarga <strong>to'liq amal qilishga</strong> va'da berasiz.</p>
         </div>
 
-        <div class="special-note">
-          <strong>🫡 O'QITUVCHIDAN MAXSUS XABAR</strong>
+        <div class="note-box">
+          <strong>🫡 O'qituvchidan maxsus xabar</strong>
           Egzamen kuni testting jauaptarin qaidan aldingdar dese — <em>«ozimiz taptiq dengder, Eldar agai berdi demengder»</em> ok 🫡
         </div>
+
+      </div>
+
+      <div class="disclaimer">
+        <strong>⚠️ Javobgarlik haqida</strong>
+        Ushbu ma'lumotlar faqat imtihonga tayyorlanish maqsadida taqdim etilgan. Saytdan olingan ma'lumotdan noto'g'ri foydalanish yoki tarqatish natijasida yuzaga keladigan barcha oqibatlar uchun <strong>faqat o'quvchining o'zi to'liq javobgar</strong> hisoblanadi.
       </div>
     </div>
 
-    <div class="consent-actions">
-      <label class="checkbox-row" for="agree-check">
-        <input type="checkbox" id="agree-check" onchange="toggleAccept()">
-        <label for="agree-check">Men yuqoridagi barcha shartlarni to'liq o'qidim va ularga <strong>to'liq roziman</strong>. Qoidalarni buzmaslikka va'da beraman.</label>
-      </label>
+    <div class="card-footer">
+      <div class="check-group">
+
+        <div class="check-item" id="ci1" onclick="syncCheck('c1','ci1')">
+          <input type="checkbox" id="c1" onchange="updateBtn()">
+          <label for="c1">Yuqoridagi barcha shartlarni to'liq o'qidim va ularga <strong>roziman</strong>.</label>
+        </div>
+
+        <div class="check-item" id="ci2" onclick="syncCheck('c2','ci2')">
+          <input type="checkbox" id="c2" onchange="updateBtn()">
+          <label for="c2">Bu materiallar faqat <strong>shaxsiy tayyorlanish</strong> uchun ekanini tushundim. Agar bu ma'lumotdan foydalanib biror oqibat yuzaga kelsa, <strong>o'zim javobgarman</strong>.</label>
+        </div>
+
+      </div>
 
       <div class="btn-row">
         <button class="btn btn-decline" onclick="declineConsent()">Rad etaman</button>
-        <button class="btn btn-accept" id="accept-btn" disabled onclick="acceptConsent()">✓ Roziman, Kirish</button>
+        <button class="btn btn-accept" id="accept-btn" disabled onclick="acceptConsent()">✓ Roziman — Kirish</button>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- ════════════════════════════
-     SCREEN 2: PDF VIEWER
-════════════════════════════ -->
+<!-- ══════════════════════════════
+     PDF EKRANI
+══════════════════════════════ -->
 <div id="pdf-screen">
-  <div class="pdf-header">
-    <div class="pdf-header-left">
-      <div class="pdf-logo">ExamPortal</div>
-      <div class="pdf-title">9-sinf / Yakuniy Test Javoblari</div>
+  <div class="pdf-bar">
+    <div>
+      <div class="pdf-bar-title">9-sinf Yakuniy Test Javoblari</div>
+      <div class="pdf-bar-sub">Faqat shaxsiy foydalanish uchun · Tarqatish taqiqlanadi</div>
     </div>
-    <div class="pdf-header-right">
-      <div class="live-timer">
-        <div class="live-dot"></div>
-        <span id="live-countdown">—</span>
-      </div>
-      <div class="security-badge">🔒 HIMOYALANGAN</div>
+    <div class="pdf-bar-right">
+      <div class="bar-badge badge-timer">⏳ <span id="live-cd">—</span></div>
+      <div class="bar-badge badge-lock">🔒 Himoyalangan</div>
     </div>
   </div>
-
-  <div class="watermark">SHAXSIY FOYDALANISH</div>
-
-  <div class="pdf-wrapper">
-    <iframe
-      id="pdf-embed"
-      src=""
-      type="application/pdf"
-      title="9-sinf Yakuniy Test Javoblari"
-    ></iframe>
-  </div>
+  <iframe id="pdf-frame" src="" title="9-sinf Yakuniy Test Javoblari"></iframe>
 </div>
 
-<!-- Blocked overlay (exam day) -->
-<div id="blocked-overlay">
-  <div class="blocked-icon">🔒</div>
-  <div class="blocked-title">Kirish Bloklandi</div>
-  <div class="blocked-sub">
-    Imtihon kuni keldi. Bu material imtihon vaqtida ko'rishga ruxsat berilmaydi.<br><br>
-    Omad tilaymiz! Bilimlaringizga ishoning. 💪
-  </div>
+<!-- Bloklangan ekran -->
+<div id="blocked" class="blocked">
+  <div class="blocked-emoji">🔒</div>
+  <h2>Kirish Bloklandi</h2>
+  <p>Imtihon kuni keldi. Bu materialga imtihon vaqtida kirish mumkin emas.<br><br>Omad tilaymiz! Bilimlaringizga ishoning 💪</p>
   <div class="blocked-date">04.06.2026 — Imtihon Kuni</div>
-  <div class="blocked-sub" style="margin-top:8px; font-style:italic; color: #e8c547;">
+  <div class="blocked-note">
     Egzamen kuni testting jauaptarin qaidan aldingdar dese —<br>
     <strong>«ozimiz taptiq dengder, Eldar agai berdi demengder»</strong> ok 🫡
   </div>
 </div>
 
-<!-- Decline modal -->
-<div class="modal-overlay" id="decline-modal">
-  <div class="modal-box">
-    <div class="modal-icon">🚫</div>
-    <div class="modal-title">Kirishga Ruxsat Yo'q</div>
-    <div class="modal-text">
-      Siz rozilik bermagansiz. Afsuski, shartlarga rozi bo'lmagan holda PDF fayldagi ma'lumotlardan foydalanishga <strong>ruxsat bera olmaymiz</strong>.<br><br>
-      Qayta urinib ko'rish uchun "Orqaga" tugmasini bosing.
-    </div>
-    <button class="modal-btn" onclick="closeDecline()">← Orqaga Qaytish</button>
+<!-- Rad etish modali -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <div class="modal-emoji">🚫</div>
+    <h3>Kirishga Ruxsat Yo'q</h3>
+    <p>
+      Siz shartlarga rozi bo'lmadingiz.<br>
+      Afsuski, rozilik bermagan holda PDF fayldagi ma'lumotlardan foydalanishga <strong>ruxsat bera olmaymiz</strong>.
+    </p>
+    <button class="modal-back" onclick="closeModal()">← Orqaga qaytish</button>
   </div>
 </div>
 
-<!-- Screenshot warning -->
-<div id="screenshot-warning">
-  <div class="w-icon">📵</div>
-  <h2>Skrinshot Aniqlandi!</h2>
-  <p>Ekran yozuvi yoki skrinshot olish taqiqlanadi.</p>
+<!-- Ogohlantirish flesher -->
+<div id="warn-flash">
+  <div class="we">📵</div>
+  <h2>Taqiqlangan amal!</h2>
+  <p>Skrinshot olish va ekran yozuvi taqiqlanadi.</p>
 </div>
 
 <script>
-  // ═══════════════════════════════════
-  // CONFIG
-  // ═══════════════════════════════════
   const EXAM_DATE = new Date('2026-06-04T00:00:00');
-  const PDF_URL   = 'javoblar.pdf'; // GitHub repo ichida shu nom bilan bo'lishi kerak
+  const PDF_URL   = 'javoblar.pdf';
 
-  // ═══════════════════════════════════
-  // COUNTDOWN
-  // ═══════════════════════════════════
-  function formatCountdown(ms) {
+  // ── Countdown ──
+  function fmtCD(ms) {
     if (ms <= 0) return 'BLOKLANGAN';
     const d = Math.floor(ms / 86400000);
     const h = Math.floor((ms % 86400000) / 3600000);
     const m = Math.floor((ms % 3600000) / 60000);
     const s = Math.floor((ms % 60000) / 1000);
-    return `${d}k ${h}s ${m}d ${s}`;
+    return `${d} kun ${h} soat ${m} daqiqa ${s} soniya`;
   }
 
-  function updateCountdowns() {
-    const now  = new Date();
-    const diff = EXAM_DATE - now;
-    const txt  = formatCountdown(diff);
-    const el1  = document.getElementById('countdown-display');
-    const el2  = document.getElementById('live-countdown');
-    if (el1) el1.textContent = txt;
-    if (el2) el2.textContent = txt;
+  function tick() {
+    const t = fmtCD(EXAM_DATE - new Date());
+    ['cd','live-cd'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = t;
+    });
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  // ── Checkbox sync (clicking whole row toggles checkbox) ──
+  function syncCheck(cbId, rowId) {
+    const cb  = document.getElementById(cbId);
+    const row = document.getElementById(rowId);
+    // Only toggle if user didn't click the checkbox directly (avoid double-toggle)
+    // We handle this by letting the click propagate from the row div, but
+    // the input's own click will also fire — so we do nothing extra here;
+    // the label's "for" attribute handles it. Row click calls this as fallback.
+    updateBtn();
   }
 
-  updateCountdowns();
-  setInterval(updateCountdowns, 1000);
+  // ── Enable/disable accept button ──
+  function updateBtn() {
+    const c1 = document.getElementById('c1').checked;
+    const c2 = document.getElementById('c2').checked;
+    const btn = document.getElementById('accept-btn');
+    btn.disabled = !(c1 && c2);
 
-  // ═══════════════════════════════════
-  // CONSENT LOGIC
-  // ═══════════════════════════════════
-  function toggleAccept() {
-    const cb  = document
+    // Update row highlight
+    document.getElementById('ci1').classList.toggle('checked', c1);
+    document.getElementById('ci2').classList.toggle('checked', c2);
+  }
+
+  // ── Row click (toggle checkbox when clicking anywhere on the row) ──
+  document.getElementById('ci1').addEventListener('click', function(e) {
+    if (e.target.tagName !== 'INPUT') {
+      document.getElementById('c1').click();
+    }
+    updateBtn();
+  });
+
+  document.getElementById('ci2').addEventListener('click', function(e) {
+    if (e.target.tagName !== 'INPUT') {
+      document.getElementById('c2').click();
+    }
+    updateBtn();
+  });
+
+  // ── Accept ──
+  function acceptConsent() {
+    if (new Date() >= EXAM_DATE) {
+      showBlocked();
+      return;
+    }
+    document.getElementById('consent-screen').style.display = 'none';
+    const ps = document.getElementById('pdf-screen');
+    ps.style.display = 'flex';
+    document.getElementById('pdf-frame').src = PDF_URL;
+    startBlockCheck();
+  }
+
+  // ── Decline ──
+  function declineConsent() {
+    document.getElementById('modal-bg').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-bg').style.display = 'none';
+  }
+
+  // ── Block on exam day ──
+  function showBlocked() {
+    document.getElementById('consent-screen').style.display = 'none';
+    document.getElementById('pdf-screen').style.display = 'none';
+    document.getElementById('blocked').style.display = 'flex';
+  }
+
+  function startBlockCheck() {
+    const iv = setInterval(() => {
+      if (new Date() >= EXAM_DATE) {
+        clearInterval(iv);
+        showBlocked();
+      }
+    }, 15000);
+  }
+
+  // Check on load if already exam day
+  if (new Date() >= EXAM_DATE) {
+    document.getElementById('consent-screen').style.display = 'none';
+    document.getElementById('blocked').style.display = 'flex';
+  }
+
+  // ── Security ──
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  window.addEventListener('beforeprint', e => {
+    e.preventDefault(); warn();
+  });
+
+  document.addEventListener('keydown', e => {
+    const block =
+      e.key === 'PrintScreen' ||
+      (e.ctrlKey && ['p','s','u'].includes(e.key.toLowerCase())) ||
+      (e.metaKey && e.shiftKey && ['3','4','5'].includes(e.key)) ||
+      e.key === 'F12' ||
+      (e.ctrlKey && e.shiftKey && ['i','j'].includes(e.key.toLowerCase()));
+    if (block) { e.preventDefault(); warn(); }
+  });
+
+  document.addEventListener('dragstart', e => e.preventDefault());
+
+  function warn() {
+    const w = document.getElementById('warn-flash');
+    w.style.display = 'flex';
+    setTimeout(() => { w.style.display = 'none'; }, 2500);
+  }
+</script>
+</body>
+  </html>
+  
