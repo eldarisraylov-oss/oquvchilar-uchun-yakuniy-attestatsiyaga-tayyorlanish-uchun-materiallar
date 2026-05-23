@@ -498,24 +498,29 @@ async function loadPDF() {
     var container = document.getElementById('canvas-container');
     container.style.display = 'flex';
 
+    var dpr  = window.devicePixelRatio || 1;
     var maxW = Math.min(window.innerWidth - 24, 860);
 
     for (var i = 1; i <= total; i++) {
-      var page     = await pdfDoc.getPage(i);
-      var vp0      = page.getViewport({ scale: 1 });
-      var scale    = maxW / vp0.width;
-      var viewport = page.getViewport({ scale: scale });
+      var page  = await pdfDoc.getPage(i);
+      var vp0   = page.getViewport({ scale: 1 });
 
-      var canvas   = document.createElement('canvas');
-      canvas.className = 'page-canvas';
-      canvas.width     = viewport.width;
-      canvas.height    = viewport.height;
+      // Base scale to fit screen width, then multiply by dpr for sharpness
+      var baseScale = maxW / vp0.width;
+      var viewport  = page.getViewport({ scale: baseScale * dpr });
+
+      var canvas = document.createElement('canvas');
+      canvas.className   = 'page-canvas';
+      // Canvas internal size = high-res
+      canvas.width       = viewport.width;
+      canvas.height      = viewport.height;
+      // CSS display size = normal (so it looks sharp, not giant)
+      canvas.style.width  = (viewport.width  / dpr) + 'px';
+      canvas.style.height = (viewport.height / dpr) + 'px';
       container.appendChild(canvas);
 
-      await page.render({
-        canvasContext: canvas.getContext('2d'),
-        viewport: viewport
-      }).promise;
+      var ctx = canvas.getContext('2d');
+      await page.render({ canvasContext: ctx, viewport: viewport }).promise;
     }
   } catch(e) {
     document.getElementById('pdf-loading').innerHTML =
