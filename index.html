@@ -14,7 +14,6 @@ body {
   min-height: 100vh;
   user-select: none;
   -webkit-user-select: none;
-  -moz-user-select: none;
 }
 
 /* ══ CONSENT ══ */
@@ -37,38 +36,28 @@ body {
 
 .card-header {
   background: #1e3a5f;
-  padding: 28px 28px 24px;
+  padding: 28px 28px 22px;
   color: #fff;
 }
-
 .header-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #7eb3e0;
-  margin-bottom: 8px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: #7eb3e0; margin-bottom: 8px;
 }
-
 .card-header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
 .card-header p  { font-size: 13px; color: #a8c4e0; line-height: 1.6; }
 
 .timer-strip {
-  background: #fff7ed;
-  border-bottom: 1px solid #fed7aa;
-  padding: 12px 28px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  font-size: 13px;
-  color: #92400e;
+  background: #fff7ed; border-bottom: 1px solid #fed7aa;
+  padding: 11px 28px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: 13px; color: #92400e;
 }
 .timer-strip strong { color: #c2410c; }
 #cd {
-  font-size: 13px; font-weight: 700;
-  color: #c2410c; background: #fee2e2;
-  border-radius: 6px; padding: 3px 10px; white-space: nowrap;
+  font-size: 13px; font-weight: 700; color: #c2410c;
+  background: #fee2e2; border-radius: 6px;
+  padding: 3px 10px; white-space: nowrap;
 }
 
 .card-body { padding: 20px 28px 0; }
@@ -80,25 +69,22 @@ body {
 }
 
 .rules-box {
-  border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  height: 210px;
-  overflow-y: auto;
-  padding: 14px;
-  background: #f8fafc;
+  border: 1px solid #e2e8f0; border-radius: 10px;
+  height: 200px; overflow-y: auto;
+  padding: 12px; background: #f8fafc;
 }
 .rules-box::-webkit-scrollbar { width: 5px; }
 .rules-box::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
 .rule-item {
   display: flex; gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px; margin-bottom: 8px;
-  background: #fff; border: 1px solid #e2e8f0;
+  padding: 9px 12px; border-radius: 8px;
+  margin-bottom: 7px; background: #fff;
+  border: 1px solid #e2e8f0;
 }
 .rule-item:last-child { margin-bottom: 0; }
-.rn { font-weight: 700; color: #1e3a5f; font-size: 13px; flex-shrink: 0; width: 22px; }
-.rule-item p { color: #475569; font-size: 13px; line-height: 1.7; }
+.rn { font-weight: 700; color: #1e3a5f; font-size: 13px; flex-shrink: 0; width: 20px; }
+.rule-item p { color: #475569; font-size: 13px; line-height: 1.65; }
 
 .note-box {
   margin-top: 10px;
@@ -106,7 +92,10 @@ body {
   border-radius: 8px; padding: 12px 14px;
   font-size: 13px; color: #1e40af; line-height: 1.7;
 }
-.note-box strong { display: block; font-size: 11px; letter-spacing: 1px; color: #3b82f6; margin-bottom: 4px; text-transform: uppercase; }
+.note-box strong {
+  display: block; font-size: 11px; letter-spacing: 1px;
+  color: #3b82f6; margin-bottom: 4px; text-transform: uppercase;
+}
 
 .disclaimer {
   margin-top: 12px;
@@ -114,63 +103,80 @@ body {
   border-radius: 8px; padding: 12px 14px;
   font-size: 12.5px; color: #92400e; line-height: 1.7;
 }
-.disclaimer strong { display: block; font-size: 11px; letter-spacing: 1px; margin-bottom: 4px; text-transform: uppercase; color: #c2410c; }
+.disclaimer strong {
+  display: block; font-size: 11px; letter-spacing: 1px;
+  margin-bottom: 4px; text-transform: uppercase; color: #c2410c;
+}
 
+/* ── Checkboxes ── */
 .card-footer { padding: 18px 28px 26px; }
-
 .check-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
 
 .check-item {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 12px 14px;
-  border: 1.5px solid #e2e8f0; border-radius: 10px;
-  cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 13px 14px;
+  border: 2px solid #e2e8f0; border-radius: 10px;
+  background: #fafafa;
+  transition: border-color 0.15s, background 0.15s;
 }
-.check-item:hover { border-color: #93c5fd; background: #f0f9ff; }
-.check-item.checked { border-color: #3b82f6; background: #eff6ff; }
-.check-item input[type="checkbox"] {
-  width: 17px; height: 17px;
-  accent-color: #2563eb; cursor: pointer; flex-shrink: 0; margin-top: 2px;
-}
-.check-item label { font-size: 13px; color: #334155; line-height: 1.6; cursor: pointer; }
+.check-item.active { border-color: #3b82f6; background: #eff6ff; }
 
+.check-item input[type="checkbox"] {
+  width: 20px; height: 20px;
+  accent-color: #2563eb;
+  cursor: pointer; flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.check-item label {
+  font-size: 13.5px; color: #334155;
+  line-height: 1.6; cursor: pointer;
+}
+
+/* ── Buttons ── */
 .btn-row { display: flex; gap: 10px; }
 
 .btn {
-  flex: 1; padding: 13px; border-radius: 10px;
+  flex: 1; padding: 14px; border-radius: 10px;
   font-family: 'Inter', sans-serif; font-size: 14px;
-  font-weight: 600; cursor: pointer; border: none; transition: all 0.15s;
+  font-weight: 600; cursor: pointer; border: none;
+  transition: all 0.15s;
 }
+
 .btn-decline {
   background: #f1f5f9; color: #64748b;
   border: 1.5px solid #e2e8f0;
 }
 .btn-decline:hover { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
-.btn-accept { background: #2563eb; color: #fff; }
-.btn-accept:disabled { background: #bfdbfe; color: #93c5fd; cursor: not-allowed; }
+
+.btn-accept {
+  background: #2563eb; color: #fff;
+}
+.btn-accept:disabled {
+  background: #dbeafe; color: #93c5fd; cursor: not-allowed;
+  transform: none !important; box-shadow: none !important;
+}
 .btn-accept:not(:disabled):hover {
-  background: #1d4ed8; transform: translateY(-1px);
+  background: #1d4ed8;
+  transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(37,99,235,0.35);
 }
 
-/* ══ PDF VIEWER ══ */
+/* ══ PDF SCREEN ══ */
 #pdf-screen {
-  display: none;
-  position: fixed; inset: 0;
-  flex-direction: column;
-  background: #1a1a2e;
+  display: none; position: fixed; inset: 0;
+  flex-direction: column; background: #1a1a2e;
 }
 
 .pdf-bar {
   background: #1e3a5f; color: #fff;
   padding: 10px 20px;
-  display: flex; align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   flex-shrink: 0; gap: 10px; flex-wrap: wrap;
 }
 .pdf-bar-title { font-size: 14px; font-weight: 600; }
 .pdf-bar-sub   { font-size: 11px; color: #7eb3e0; margin-top: 1px; }
-.pdf-bar-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.pdf-bar-right { display: flex; align-items: center; gap: 10px; }
 
 .bar-badge {
   font-size: 11px; font-weight: 600;
@@ -179,59 +185,28 @@ body {
 .badge-lock  { background: rgba(255,255,255,0.12); color: #a8c4e0; }
 .badge-timer { background: #fee2e2; color: #c2410c; }
 
-/* Nav bar */
-.pdf-nav {
-  background: #16213e;
-  display: flex; align-items: center; justify-content: center;
-  gap: 12px; padding: 8px 16px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  flex-shrink: 0;
-}
-
-.nav-btn {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #e2e8f0;
-  padding: 6px 16px; border-radius: 7px;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: all 0.15s;
-}
-.nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.15); }
-.nav-btn:disabled { opacity: 0.35; cursor: not-allowed; }
-
-#page-info {
-  font-size: 13px; color: #94a3b8;
-  font-weight: 500; min-width: 80px; text-align: center;
-}
-
-/* Canvas area */
 #canvas-container {
-  flex: 1; overflow-y: auto; overflow-x: auto;
+  flex: 1; overflow-y: auto; overflow-x: hidden;
   display: flex; flex-direction: column;
-  align-items: center; padding: 20px 12px;
-  gap: 16px;
+  align-items: center; padding: 20px 12px; gap: 14px;
   background: #1a1a2e;
-  pointer-events: none; /* prevents text selection & interaction */
 }
-
-#canvas-container::-webkit-scrollbar { width: 8px; }
+#canvas-container::-webkit-scrollbar { width: 7px; }
 #canvas-container::-webkit-scrollbar-track { background: #111827; }
 #canvas-container::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
 
 .page-canvas {
-  display: block;
+  display: block; max-width: 100%;
   border-radius: 4px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.5);
-  max-width: 100%;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  pointer-events: none;
 }
 
-/* Loading */
 #pdf-loading {
-  display: flex; align-items: center; justify-content: center;
+  flex: 1; display: flex;
+  align-items: center; justify-content: center;
   flex-direction: column; gap: 14px;
   color: #94a3b8; font-size: 14px;
-  position: absolute; inset: 0; background: #1a1a2e; z-index: 10;
 }
 .spinner {
   width: 36px; height: 36px;
@@ -265,28 +240,28 @@ body {
   max-width: 400px; line-height: 1.7;
 }
 
-/* ══ DECLINE MODAL ══ */
+/* ══ MODAL ══ */
 .modal-bg {
   display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.5); z-index: 400;
+  background: rgba(0,0,0,0.55); z-index: 400;
   align-items: center; justify-content: center; padding: 20px;
 }
 .modal {
   background: #fff; border-radius: 14px;
-  padding: 32px 28px; max-width: 380px; width: 100%; text-align: center;
+  padding: 32px 28px; max-width: 400px; width: 100%; text-align: center;
 }
-.modal-emoji { font-size: 44px; margin-bottom: 12px; }
-.modal h3  { font-size: 18px; font-weight: 700; color: #b91c1c; margin-bottom: 10px; }
-.modal p   { font-size: 13.5px; color: #64748b; line-height: 1.7; margin-bottom: 20px; }
+.modal-emoji { font-size: 48px; margin-bottom: 14px; display: block; }
+.modal h3 { font-size: 18px; font-weight: 700; color: #b91c1c; margin-bottom: 12px; }
+.modal p  { font-size: 14px; color: #475569; line-height: 1.75; margin-bottom: 22px; }
 .modal-back {
   background: #f1f5f9; border: 1.5px solid #e2e8f0;
-  color: #334155; padding: 11px 24px; border-radius: 8px;
+  color: #334155; padding: 12px 28px; border-radius: 8px;
   font-family: 'Inter', sans-serif; font-size: 14px;
-  font-weight: 600; cursor: pointer; transition: all 0.15s;
+  font-weight: 600; cursor: pointer; transition: background 0.15s;
 }
 .modal-back:hover { background: #e2e8f0; }
 
-/* ══ WARN FLASH ══ */
+/* ══ WARN ══ */
 #warn-flash {
   display: none; position: fixed; inset: 0; background: #000;
   z-index: 9999; align-items: center; justify-content: center;
@@ -305,9 +280,7 @@ body {
 </head>
 <body>
 
-<!-- ══════════════════════════
-     ROZILIK EKRANI
-══════════════════════════ -->
+<!-- ══ ROZILIK ══ -->
 <div id="consent-screen">
   <div class="card">
 
@@ -318,83 +291,72 @@ body {
     </div>
 
     <div class="timer-strip">
-      <span>⏳ Imtihon kuni: <strong>04.06.2026</strong> — foydalanish muddati:</span>
+      <span>⏳ Imtihon kuni: <strong>04.06.2026</strong> — qolgan vaqt:</span>
       <div id="cd">hisoblanmoqda...</div>
     </div>
 
     <div class="card-body">
       <div class="section-label">Foydalanish shartlari</div>
       <div class="rules-box">
-
         <div class="rule-item">
           <div class="rn">1.</div>
           <p>Bu materiallar faqat <strong>imtihonga shaxsiy tayyorlanish</strong> uchun berilgan. Boshqa maqsadda foydalanish taqiqlanadi.</p>
         </div>
-
         <div class="rule-item">
           <div class="rn">2.</div>
           <p>Materiallarni ijtimoiy tarmoqlarda, guruhlarda yoki boshqa platformalarda <strong>tarqatish qat'iyan taqiqlanadi</strong>.</p>
         </div>
-
         <div class="rule-item">
           <div class="rn">3.</div>
           <p><strong>Skrinshot olish, ekran yozuvi</strong> va materialni <strong>yuklab olish</strong> taqiqlanadi. Sayt texnik himoyaga ega.</p>
         </div>
-
         <div class="rule-item">
           <div class="rn">4.</div>
           <p>Materiallar <strong>04.06.2026 — imtihon kuni</strong> avtomatik bloklanadi. Imtihon paytida foydalanish taqiqlanadi.</p>
         </div>
-
         <div class="rule-item">
           <div class="rn">5.</div>
           <p>Bu saytdan olingan ma'lumotdan foydalanib yuzaga keladigan har qanday oqibat uchun <strong>faqat o'quvchining o'zi javobgar</strong> bo'ladi.</p>
         </div>
-
         <div class="rule-item">
           <div class="rn">6.</div>
           <p>Ushbu shartlarga rozi bo'lib, barcha qoidalarga <strong>to'liq amal qilishga</strong> va'da berasiz.</p>
         </div>
-
         <div class="note-box">
           <strong>🫡 O'qituvchidan maxsus xabar</strong>
           Egzamen kuni testting jauaptarin qaidan aldingdar dese — <em>«ozimiz taptiq dengder, Eldar agai berdi demengder»</em> ok 🫡
         </div>
-
       </div>
 
       <div class="disclaimer">
         <strong>⚠️ Javobgarlik haqida</strong>
-        Ushbu ma'lumotlar faqat imtihonga tayyorlanish maqsadida taqdim etilgan. Saytdan olingan ma'lumotdan noto'g'ri foydalanish yoki tarqatish natijasida yuzaga keladigan barcha oqibatlar uchun <strong>faqat o'quvchining o'zi to'liq javobgar</strong> hisoblanadi.
+        Ushbu ma'lumotlar faqat imtihonga tayyorlanish maqsadida taqdim etilgan. Bu saytdan olingan ma'lumotdan noto'g'ri foydalanish yoki tarqatish natijasida yuzaga keladigan barcha oqibatlar uchun <strong>faqat o'quvchining o'zi to'liq javobgar</strong> hisoblanadi.
       </div>
     </div>
 
     <div class="card-footer">
       <div class="check-group">
-        <div class="check-item" id="ci1">
-          <input type="checkbox" id="c1" onchange="updateBtn()">
+        <div class="check-item" id="row1">
+          <input type="checkbox" id="c1">
           <label for="c1">Yuqoridagi barcha shartlarni to'liq o'qidim va ularga <strong>roziman</strong>.</label>
         </div>
-        <div class="check-item" id="ci2">
-          <input type="checkbox" id="c2" onchange="updateBtn()">
+        <div class="check-item" id="row2">
+          <input type="checkbox" id="c2">
           <label for="c2">Bu materiallar faqat <strong>shaxsiy tayyorlanish</strong> uchun ekanini tushundim. Agar bu ma'lumotdan foydalanib biror oqibat yuzaga kelsa, <strong>o'zim javobgarman</strong>.</label>
         </div>
       </div>
 
       <div class="btn-row">
-        <button class="btn btn-decline" onclick="declineConsent()">Rad etaman</button>
-        <button class="btn btn-accept" id="accept-btn" disabled onclick="acceptConsent()">✓ Roziman — Kirish</button>
+        <button class="btn btn-decline" id="decline-btn">Rad etaman</button>
+        <button class="btn btn-accept" id="accept-btn" disabled>✓ Roziman — Kirish</button>
       </div>
     </div>
 
   </div>
 </div>
 
-<!-- ══════════════════════════
-     PDF VIEWER EKRANI
-══════════════════════════ -->
+<!-- ══ PDF EKRANI ══ -->
 <div id="pdf-screen">
-
   <div class="pdf-bar">
     <div>
       <div class="pdf-bar-title">9-sinf Yakuniy Test Javoblari</div>
@@ -406,23 +368,14 @@ body {
     </div>
   </div>
 
-  <div class="pdf-nav">
-    <button class="nav-btn" id="prev-btn" onclick="changePage(-1)" disabled>← Oldingi</button>
-    <div id="page-info">— / —</div>
-    <button class="nav-btn" id="next-btn" onclick="changePage(1)" disabled>Keyingi →</button>
+  <div id="pdf-loading">
+    <div class="spinner"></div>
+    <span>PDF yuklanmoqda...</span>
   </div>
-
-  <div style="position:relative; flex:1; overflow:hidden; display:flex; flex-direction:column;">
-    <div id="pdf-loading">
-      <div class="spinner"></div>
-      <span>PDF yuklanmoqda...</span>
-    </div>
-    <div id="canvas-container"></div>
-  </div>
-
+  <div id="canvas-container"></div>
 </div>
 
-<!-- Bloklangan ekran -->
+<!-- ══ BLOKLANGAN ══ -->
 <div id="blocked">
   <div class="blocked-emoji">🔒</div>
   <h2>Kirish Bloklandi</h2>
@@ -434,168 +387,171 @@ body {
   </div>
 </div>
 
-<!-- Rad etish modali -->
+<!-- ══ RAD ETISH MODALI ══ -->
 <div class="modal-bg" id="modal-bg">
   <div class="modal">
-    <div class="modal-emoji">🚫</div>
-    <h3>Kirishga Ruxsat Yo'q</h3>
-    <p>Siz shartlarga rozi bo'lmadingiz. Shartlarga rozi bo'lmagan holda PDF fayldagi ma'lumotlardan foydalanishga <strong>ruxsat bera olmaymiz</strong>.</p>
-    <button class="modal-back" onclick="closeModal()">← Orqaga qaytish</button>
+    <span class="modal-emoji">🚫</span>
+    <h3>Kechirasiz, foydalana olmaysiz</h3>
+    <p>
+      Siz rozilik bermagansiz.<br><br>
+      Afsuski, shartlarimizga rozi bo'lmagan holda bu fayldan <strong>foydalana olmaysiz</strong>. Materiallar faqat shartlarga rozi bo'lgan o'quvchilarga taqdim etiladi.
+    </p>
+    <button class="modal-back" id="back-btn">← Orqaga qaytish</button>
   </div>
 </div>
 
-<!-- Ogohlantirish -->
+<!-- ══ OGOHLANTIRISH ══ -->
 <div id="warn-flash">
   <div class="we">📵</div>
   <h2>Taqiqlangan amal!</h2>
   <p>Skrinshot olish, ekran yozuvi va yuklab olish taqiqlanadi.</p>
 </div>
 
-<!-- PDF.js CDN -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-  // ── CONFIG ──
-  const EXAM_DATE = new Date('2026-06-04T00:00:00');
-  const PDF_URL   = 'javoblar.pdf';
+const EXAM_DATE = new Date('2026-06-04T00:00:00');
+const PDF_URL   = 'javoblar.pdf';
 
-  // ── Countdown ──
-  function fmtCD(ms) {
-    if (ms <= 0) return 'BLOKLANGAN';
-    const d = Math.floor(ms / 86400000);
-    const h = Math.floor((ms % 86400000) / 3600000);
-    const m = Math.floor((ms % 3600000) / 60000);
-    const s = Math.floor((ms % 60000) / 1000);
-    return `${d} kun ${h}s ${m}d ${s}`;
-  }
-  function tick() {
-    const t = fmtCD(EXAM_DATE - new Date());
-    ['cd','live-cd'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = t;
-    });
-  }
-  tick(); setInterval(tick, 1000);
+/* ── Countdown ── */
+function fmtCD(ms) {
+  if (ms <= 0) return 'BLOKLANGAN';
+  const d = Math.floor(ms / 86400000);
+  const h = Math.floor((ms % 86400000) / 3600000);
+  const m = Math.floor((ms % 3600000) / 60000);
+  const s = Math.floor((ms % 60000) / 1000);
+  return d + ' kun ' + h + 's ' + m + 'd ' + s + 'son';
+}
+function tick() {
+  var t = fmtCD(EXAM_DATE - new Date());
+  var el1 = document.getElementById('cd');
+  var el2 = document.getElementById('live-cd');
+  if (el1) el1.textContent = t;
+  if (el2) el2.textContent = t;
+}
+tick();
+setInterval(tick, 1000);
 
-  // ── Checkbox ──
-  function updateBtn() {
-    const c1 = document.getElementById('c1').checked;
-    const c2 = document.getElementById('c2').checked;
-    document.getElementById('accept-btn').disabled = !(c1 && c2);
-    document.getElementById('ci1').classList.toggle('checked', c1);
-    document.getElementById('ci2').classList.toggle('checked', c2);
-  }
+/* ── Checkbox logic ── */
+var c1 = document.getElementById('c1');
+var c2 = document.getElementById('c2');
+var acceptBtn = document.getElementById('accept-btn');
+var row1 = document.getElementById('row1');
+var row2 = document.getElementById('row2');
 
-  // Row click toggle
-  ['ci1','ci2'].forEach((rowId, i) => {
-    document.getElementById(rowId).addEventListener('click', function(e) {
-      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL') {
-        const cb = document.getElementById('c' + (i+1));
-        cb.checked = !cb.checked;
-        updateBtn();
-      }
-    });
-  });
+function checkState() {
+  var both = c1.checked && c2.checked;
+  acceptBtn.disabled = !both;
+  row1.className = 'check-item' + (c1.checked ? ' active' : '');
+  row2.className = 'check-item' + (c2.checked ? ' active' : '');
+}
 
-  // ── Accept ──
-  function acceptConsent() {
-    if (new Date() >= EXAM_DATE) { showBlocked(); return; }
-    document.getElementById('consent-screen').style.display = 'none';
-    const ps = document.getElementById('pdf-screen');
-    ps.style.display = 'flex';
-    loadPDF();
-    startBlockCheck();
-  }
+c1.addEventListener('change', checkState);
+c2.addEventListener('change', checkState);
 
-  function declineConsent() {
-    document.getElementById('modal-bg').style.display = 'flex';
-  }
-  function closeModal() {
-    document.getElementById('modal-bg').style.display = 'none';
-  }
+/* ── Buttons ── */
+acceptBtn.addEventListener('click', function() {
+  if (acceptBtn.disabled) return;
+  if (new Date() >= EXAM_DATE) { showBlocked(); return; }
+  document.getElementById('consent-screen').style.display = 'none';
+  var ps = document.getElementById('pdf-screen');
+  ps.style.display = 'flex';
+  ps.style.flexDirection = 'column';
+  loadPDF();
+  startBlockCheck();
+});
 
-  // ── Block ──
-  function showBlocked() {
-    document.getElementById('consent-screen').style.display = 'none';
-    document.getElementById('pdf-screen').style.display = 'none';
-    document.getElementById('blocked').style.display = 'flex';
-  }
-  function startBlockCheck() {
-    setInterval(() => { if (new Date() >= EXAM_DATE) showBlocked(); }, 15000);
-  }
+document.getElementById('decline-btn').addEventListener('click', function() {
+  document.getElementById('modal-bg').style.display = 'flex';
+});
 
-  if (new Date() >= EXAM_DATE) {
-    document.getElementById('consent-screen').style.display = 'none';
-    document.getElementById('blocked').style.display = 'flex';
-  }
+document.getElementById('back-btn').addEventListener('click', function() {
+  document.getElementById('modal-bg').style.display = 'none';
+});
 
-  // ── PDF.js Renderer ──
-  let pdfDoc    = null;
-  let curPage   = 1;
-  let totalPages = 0;
-  let rendering = false;
+/* ── Block ── */
+function showBlocked() {
+  document.getElementById('consent-screen').style.display = 'none';
+  document.getElementById('pdf-screen').style.display = 'none';
+  document.getElementById('blocked').style.display = 'flex';
+}
+function startBlockCheck() {
+  setInterval(function() {
+    if (new Date() >= EXAM_DATE) showBlocked();
+  }, 15000);
+}
 
-  async function loadPDF() {
-    try {
-      const loadingTask = pdfjsLib.getDocument(PDF_URL);
-      pdfDoc = await loadingTask.promise;
-      totalPages = pdfDoc.numPages;
-      document.getElementById('pdf-loading').style.display = 'none';
-      updateNavUI();
-      renderAllPages();
-    } catch(err) {
-      document.getElementById('pdf-loading').innerHTML =
-        '<div style="color:#ef4444;font-size:14px;">⚠️ PDF yuklanmadi.<br>javoblar.pdf fayli repo ichida bo\'lishi kerak.</div>';
-    }
-  }
+if (new Date() >= EXAM_DATE) {
+  document.getElementById('consent-screen').style.display = 'none';
+  document.getElementById('blocked').style.display = 'flex';
+}
 
-  async function renderAllPages() {
-    const container = document.getElementById('canvas-container');
-    container.innerHTML = '';
+/* ── PDF.js ── */
+async function loadPDF() {
+  try {
+    var pdfDoc = await pdfjsLib.getDocument(PDF_URL).promise;
+    var total  = pdfDoc.numPages;
 
-    const viewportWidth = Math.min(window.innerWidth - 40, 900);
+    document.getElementById('pdf-loading').style.display = 'none';
+    var container = document.getElementById('canvas-container');
+    container.style.display = 'flex';
 
-    for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
-      const page = await pdfDoc.getPage(pageNum);
-      const scale = viewportWidth / page.getViewport({ scale: 1 }).width;
-      const viewport = page.getViewport({ scale });
+    var maxW = Math.min(window.innerWidth - 24, 860);
 
-      const canvas = document.createElement('canvas');
+    for (var i = 1; i <= total; i++) {
+      var page     = await pdfDoc.getPage(i);
+      var vp0      = page.getViewport({ scale: 1 });
+      var scale    = maxW / vp0.width;
+      var viewport = page.getViewport({ scale: scale });
+
+      var canvas   = document.createElement('canvas');
       canvas.className = 'page-canvas';
-      canvas.width  = viewport.width;
-      canvas.height = viewport.height;
+      canvas.width     = viewport.width;
+      canvas.height    = viewport.height;
       container.appendChild(canvas);
 
-      const ctx = canvas.getContext('2d');
-      await page.render({ canvasContext: ctx, viewport }).promise;
+      await page.render({
+        canvasContext: canvas.getContext('2d'),
+        viewport: viewport
+      }).promise;
     }
-
-    // Hide loading, update nav
-    document.getElementById('pdf-loading').style.display = 'none';
-    document.getElementById('page-info').textContent = `Jami ${totalPages} sahifa`;
-    document.getElementById('prev-btn').style.display = 'none';
-    document.getElementById('next-btn').style.display = 'none';
+  } catch(e) {
+    document.getElementById('pdf-loading').innerHTML =
+      '<div style="color:#ef4444;text-align:center;padding:20px;">' +
+      '⚠️ PDF yuklanmadi.<br><br>' +
+      '<small style="color:#94a3b8">javoblar.pdf fayli GitHub repoda bo\'lishi kerak.</small></div>';
   }
+}
 
-  function updateNavUI() {
-    document.getElementById('page-info').textContent = `${curPage} / ${totalPages}`;
-    document.getElementById('prev-btn').disabled = curPage <= 1;
-    document.getElementById('next-btn').disabled = curPage >= totalPages;
-  }
+/* ── Security ── */
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 
-  function changePage(dir) {
-    // Not used in all-pages mode but kept for optional single-page mode
-  }
+window.addEventListener('beforeprint', function(e) {
+  e.preventDefault(); warn();
+});
 
-  // ── Security ──
-  document.addEventListener('contextmenu', e => e.preventDefault());
-  window.addEventListener('beforeprint', e => { e.preventDefault(); warn(); });
-  document.addEventListener('keydown', e => {
-    const block =
-      e.key === 'PrintScreen' ||
-      (e.ctrlKey && ['p','s','u'].includes(e.key.toLowerCase())) ||
-      (e.metaKey && e.shiftKey && ['3','4','5'].includes(e.key)) ||
-      e.key === 'F12' ||
-     
+document.addEventListener('keydown', function(e) {
+  var block =
+    e.key === 'PrintScreen' ||
+    (e.ctrlKey && ['p','s','u'].includes(e.key.toLowerCase())) ||
+    (e.metaKey && e.shiftKey && ['3','4','5'].includes(e.key)) ||
+    e.key === 'F12' ||
+    (e.ctrlKey && e.shiftKey && ['i','j'].includes(e.key.toLowerCase()));
+  if (block) { e.preventDefault(); warn(); }
+});
+
+document.addEventListener('dragstart', function(e) { e.preventDefault(); });
+document.addEventListener('mousedown', function(e) {
+  if (e.button === 2) e.preventDefault();
+});
+
+function warn() {
+  var w = document.getElementById('warn-flash');
+  w.style.display = 'flex';
+  setTimeout(function() { w.style.display = 'none'; }, 2500);
+}
+</script>
+</body>
+</html>
